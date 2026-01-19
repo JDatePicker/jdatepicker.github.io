@@ -5,6 +5,7 @@ This repository contains the GitHub Pages website for [JDatePicker](https://gith
 ## About JDatePicker
 
 JDatePicker is a Java Swing date picker component featuring:
+
 - **JDatePicker** - A popup date selector
 - **JDatePanel** - An embeddable calendar panel
 - **MVC Architecture** - Clean separation of concerns
@@ -12,7 +13,7 @@ JDatePicker is a Java Swing date picker component featuring:
 
 ## Website
 
-The website is hosted at: **https://jdatepicker.github.io**
+The website is hosted at: **<https://jdatepicker.github.io>**
 
 ## Local Development
 
