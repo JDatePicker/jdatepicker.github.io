@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JDatePicker - Java Swing Date Picker</title>
+    <meta name="description" content="JDatePicker is a powerful, easy-to-use date picker component for Java Swing applications. Now updated for Java 17 and 21.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --bg-alt: #f8fafc;
+            --border: #e2e8f0;
+            --code-bg: #1e293b;
+            --success: #22c55e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        header .tagline {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .badges {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .badge.new {
+            background: var(--success);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #f1f5f9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+
+        section:nth-child(even) {
+            background: var(--bg-alt);
+        }
+
+        section h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        section .subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Screenshots */
+        .screenshots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .screenshot {
+            text-align: center;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 16px;
+        }
+
+        .screenshot p {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Installation */
+        .code-block {
+            background: var(--code-bg);
+            color: #e2e8f0;
+            padding: 24px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            white-space: pre-wrap;
+        }
+
+        .code-block .comment {
+            color: #64748b;
+        }
+
+        .code-block .tag {
+            color: #f472b6;
+        }
+
+        .code-block .attr {
+            color: #a5f3fc;
+        }
+
+        .code-block .value {
+            color: #86efac;
+        }
+
+        .code-block .keyword {
+            color: #c4b5fd;
+        }
+
+        .code-block .string {
+            color: #86efac;
+        }
+
+        .code-block .type {
+            color: #fcd34d;
+        }
+
+        .install-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 32px;
+        }
+
+        .install-option h3 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Usage */
+        .usage-example {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .usage-example h3 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            margin-top: 32px;
+        }
+
+        .usage-example h3:first-child {
+            margin-top: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--code-bg);
+            color: #94a3b8;
+            padding: 48px 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            header .tagline {
+                font-size: 1.2rem;
+            }
+
+            section {
+                padding: 48px 0;
+            }
+
+            section h2 {
+                font-size: 1.75rem;
+            }
+
+            .install-options {
+                grid-template-columns: 1fr;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>☕ JDatePicker</h1>
+            <div class="badges">
+                <span class="badge new">✨ Updated for Java 17 & 21</span>
+                <span class="badge">📦 Maven Central</span>
+                <span class="badge">📜 BSD License</span>
+            </div>
+            <div class="cta-buttons">
+                <a href="https://github.com/JDatePicker/JDatePicker" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    View on GitHub
+                </a>
+                <a href="#installation" class="btn btn-secondary">Get Started →</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="features">
+        <div class="container">
+            <h2>Features</h2>
+            <p class="subtitle">Everything you need for date selection in your Swing application</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>MVC Architecture</h3>
+                    <p>Clean Model-View-Controller design enables integration with any date object including java.time.LocalDate, Calendar, and Date.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Two Components</h3>
+                    <p>JDatePicker provides a popup date picker, while JDatePanel offers an embeddable calendar component.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Java 17 & 21 Ready</h3>
+                    <p>Fully updated and tested for modern Java versions while maintaining backward compatibility.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Localization</h3>
+                    <p>Built-in support for multiple languages and locales with customizable date formats.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Date Constraints</h3>
+                    <p>Easily restrict selectable dates using built-in constraints like weekday-only selection.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h3>Customizable</h3>
+                    <p>Customize colors, formats, icons, and text to match your application's look and feel.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="screenshots">
+        <div class="container">
+            <h2>Screenshots</h2>
+            <p class="subtitle">See JDatePicker in action</p>
+            <div class="screenshots">
+                <div class="screenshot">
+                    <img src="https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/jdatepicker3.jpg" alt="JDatePicker collapsed view">
+                    <p>JDatePicker - Collapsed</p>
+                </div>
+                <div class="screenshot">
+                    <img src="https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/jdatepicker1.jpg" alt="JDatePicker popup dialog">
+                    <p>JDatePicker - Popup Dialog</p>
+                </div>
+                <div class="screenshot">
+                    <img src="https://raw.githubusercontent.com/JDatePicker/JDatePicker/master/site/jdatepicker2.jpg" alt="JDatePanel embedded">
+                    <p>JDatePanel - Embedded</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="installation">
+        <div class="container">
+            <h2>Installation</h2>
+            <p class="subtitle">Add JDatePicker to your project in seconds</p>
+            <div class="install-options">
+                <div class="install-option">
+                    <h3>📦 Maven</h3>
+                    <div class="code-block">
+<span class="tag">&lt;dependency&gt;</span>
+    <span class="tag">&lt;groupId&gt;</span><span class="value">org.jdatepicker</span><span class="tag">&lt;/groupId&gt;</span>
+    <span class="tag">&lt;artifactId&gt;</span><span class="value">jdatepicker</span><span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;version&gt;</span><span class="value">2.0.0</span><span class="tag">&lt;/version&gt;</span>
+<span class="tag">&lt;/dependency&gt;</span>
+                    </div>
+                </div>
+                <div class="install-option">
+                    <h3>🐘 Gradle</h3>
+                    <div class="code-block">
+<span class="keyword">implementation</span> <span class="string">'org.jdatepicker:jdatepicker:2.0.0'</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="usage">
+        <div class="container">
+            <h2>Quick Start</h2>
+            <p class="subtitle">Get up and running with just a few lines of code</p>
+            <div class="usage-example">
+                <h3>Basic JDatePicker (Popup)</h3>
+                <div class="code-block">
+<span class="keyword">import</span> org.jdatepicker.JDatePicker;
+
+<span class="comment">// Create a date picker with popup calendar</span>
+<span class="type">JDatePicker</span> datePicker = <span class="keyword">new</span> <span class="type">JDatePicker</span>();
+
+<span class="comment">// Add to your panel</span>
+panel.add(datePicker);
+
+<span class="comment">// Get the selected date</span>
+<span class="type">Calendar</span> selectedDate = (<span class="type">Calendar</span>) datePicker.getModel().getValue();
+                </div>
+
+                <h3>Embedded JDatePanel</h3>
+                <div class="code-block">
+<span class="keyword">import</span> org.jdatepicker.JDatePanel;
+
+<span class="comment">// Create an embedded calendar panel</span>
+<span class="type">JDatePanel</span> datePanel = <span class="keyword">new</span> <span class="type">JDatePanel</span>();
+
+<span class="comment">// Add directly to your container</span>
+frame.add(datePanel);
+                </div>
+
+                <h3>Using with java.time.LocalDate</h3>
+                <div class="code-block">
+<span class="keyword">import</span> org.jdatepicker.JDatePicker;
+<span class="keyword">import</span> org.jdatepicker.LocalDateModel;
+
+<span class="comment">// Create a model for LocalDate</span>
+<span class="type">LocalDateModel</span> model = <span class="keyword">new</span> <span class="type">LocalDateModel</span>();
+
+<span class="comment">// Create picker with LocalDate model</span>
+<span class="type">JDatePicker</span> datePicker = <span class="keyword">new</span> <span class="type">JDatePicker</span>(model);
+
+<span class="comment">// Get selected date as LocalDate</span>
+<span class="type">LocalDate</span> date = model.getValue();
+                </div>
+
+                <h3>Customizing Appearance</h3>
+                <div class="code-block">
+<span class="keyword">import</span> org.jdatepicker.ComponentColorDefaults;
+<span class="keyword">import</span> java.awt.Color;
+
+<span class="comment">// Customize colors globally</span>
+ComponentColorDefaults.getInstance()
+    .setColor(ComponentColorDefaults.Key.FG_MONTH_SELECTOR, Color.BLUE);
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/JDatePicker/JDatePicker">GitHub</a>
+                <a href="https://github.com/JDatePicker/JDatePicker/issues">Issues</a>
+                <a href="https://central.sonatype.com/artifact/org.jdatepicker/jdatepicker">Maven Central</a>
+            </div>
+            <p>JDatePicker is released under the <a href="https://opensource.org/licenses/BSD-2-Clause">BSD License</a>.</p>
+            <p style="margin-top: 8px;">Created by <a href="https://github.com/juanheyns">Juan Heyns</a> &copy; 2004 - 2026</p>
+        </div>
+    </footer>
+</body>
+</html>
